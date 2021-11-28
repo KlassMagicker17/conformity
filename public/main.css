@@ -1,0 +1,157 @@
+:root {
+    --pine-tree: #30362fff;
+    --antique-bronze: #625834ff;
+    --metallic-sunburst: #a59132ff;
+    --light-yellow: #fffbdbff;
+    --chocolate-web: #da7422ff;
+}
+
+* {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+}
+
+body {
+    margin: 0px;
+    background-color: var(--pine-tree);
+    height: 100vh;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    color: var(--chocolate-web);
+}
+
+h1 {
+    text-align: center;
+    margin: 0px;
+    font-size: 3rem;
+    margin: 0px 10vw;
+    text-transform: uppercase;
+}
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.3;
+}
+
+.buttons {
+    display: grid;
+    transition: 0.2s;
+    justify-items: center;
+    align-content: flex-start;
+    grid-template-columns: 1fr;
+}
+
+.hidden {
+    display: none;
+}
+
+#nameHolder {
+    width: min(300px, 70%);
+    /* height: 50vh; */
+}
+
+a {
+    position: absolute;
+    color: white;
+    text-decoration: none;
+    right: 0px;
+    bottom: 0px;
+    padding: 1rem;
+    opacity: 0.7;
+    transition: 200ms opacity;
+    transition-timing-function: ease-in;
+}
+a::before {
+    content: '';
+    position: absolute;
+    width: 90%;
+    height: 2px;
+    bottom: calc(1rem - 2px);
+    left: 50%;
+    transform: translateX(-50%) scaleX(0);
+    background-color: white;
+    transition: 200ms transform;
+    transition-timing-function: ease-in;
+}
+
+a:hover, a:focus {
+    opacitY: 1;
+}
+a:hover::before, a:focus::before {
+    transform: translateX(-50%) scaleX(1);
+
+}
+
+
+#nameHolder input[type=text] {
+    height: 4rem;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 1.2rem;
+    border: 2px solid var(--chocolate-web);
+}
+
+#nameHolder input[type=text]::placeholder {
+    color: var(--metallic-sunburst);
+}
+
+#nameHolder input[type=button] {
+    height: 4rem;
+    width: min(50vw, 200px);
+    text-align: center;
+    background-color: var(--metallic-sunburst);
+    border: none;
+    border-radius: 0px 20px 0px 20px;
+    color: white;
+    transition: 200ms font-size;
+    position: relative;
+}
+
+#nameHolder input[type=button]:hover, #nameHolder input[type=button]:focus {
+    font-size: 1.2rem;
+
+}
+
+
+#mainButtons input[type=button] {
+    width: 80vw;
+    height: 5rem;
+    margin: 0.5rem 0px;
+    border: none;
+    opacity: 0.5;
+    font-size: 2rem;
+    color: white;
+    background-color: var(--antique-bronze);
+    border-radius: 50px;
+    text-align: center;
+    transition: 0.2s;
+}
+
+#mainButtons input[type=button]:hover {
+    opacity: 1;
+}
+
+@media only screen and (min-width:720px) {
+    body {
+        justify-content: center;
+
+    }
+
+    h1 {
+        margin-bottom: 10vh;
+
+    }
+
+    #mainButtons {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+    #mainButtons input[type=button] {
+        width: max(150px, 10vw);
+        height: max(150px, 10vw);
+        margin: 1rem;
+    }
+}

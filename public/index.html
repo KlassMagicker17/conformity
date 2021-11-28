@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conformity</title>
+    <link rel="stylesheet" href="main.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/main.js" defer></script>
+</head>
+
+<body>
+    <h1 class="hidden" id="mainWords">WAITING FOR GAME TO START...</h1>
+    <div id="nameHolder" class="buttons">
+        <input type="text" id="nameInput" placeholder="Enter name here..." autofocus>
+        <input type="button" value="ENTER" id="nameButton">
+    </div>
+    <div id="mainButtons" class="disabled buttons hidden" disabled>
+        <input type="button" value="A" id="A" disabled>
+        <input type="button" value="B" id="B" disabled>
+        <input type="button" value="C" id="C" disabled>
+        <input type="button" value="D" id="D" disabled>
+    </div>
+    <a href="/spectator">spectate game instead</a>
+</body>
+
+</html>

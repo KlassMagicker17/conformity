@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conformity | Admin</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="table.js"></script>
+    <script src="admin.js" defer></script>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <h1>this is the administrator thing. If you find yourself here, fuck you</h1>
+    <div id="controlPanel">
+        <input type="button" value="START GAME" id="gameStart">
+        <input type="button" value="START ROUND" id="roundStart" disabled>
+        <input type="button" value="RESTART GAME" id='gameRestart'>
+        <div id="numberPlayers">Number of Players : 0</div>
+        <div id="currentPlaying">Currently still part of the game: 0</div>
+        <div id="currentVoted">Number how have voted (for this round): 0</div>
+        <table id="rollingTotalVote">
+            <tr>
+                <th>A</th>
+                <th>B</th>
+                <th>C</th>
+                <th>D</th>
+            </tr>
+            <tr>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+        </table>
+    </div>
+    <div id="playerList">
+        <table id="currtable">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Status</th>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>

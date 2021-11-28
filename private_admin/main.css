@@ -1,0 +1,89 @@
+:root {
+    --pine-tree: #30362fff;
+    --antique-bronze: #625834ff;
+    --metallic-sunburst: #a59132ff;
+    --light-yellow: #fffbdbff;
+    --chocolate-web: #da7422ff;
+}
+
+* {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+body {
+    margin: 0px;
+    background-color: var(--pine-tree);
+    color: var(--chocolate-web);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+}
+
+h1 {
+    text-align: center;
+    grid-column: span 2;
+    margin: 10vh;
+}
+
+table {
+    border-collapse: collapse;
+    background-color: var(--antique-bronze);
+    color: white;
+    margin: 0px 2rem;
+}
+
+td {
+    border: 2px solid var(--pine-tree);
+    padding: 1rem;
+}
+
+tr:first-child>td {
+    background-color: var(--metallic-sunburst);
+}
+
+#controlPanel {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-left: 2rem;
+}
+
+#controlPanel input[type=button] {
+    padding: 1rem;
+    background: hsla(0, 0%, 100%, 1);
+    border: 2px solid var(--chocolate-web);
+    height: 4rem;
+    margin: 0.5rem;
+    transition: 100ms transform ease-in;
+}
+
+#controlPanel input[type=button]:not([disabled]):hover, #controlPanel input[type=button]:not([disabled]):focus {
+    transform: scale(1.1);
+}
+
+#controlPanel > div {
+    text-align: center;
+    padding: 2rem;
+    background-color: hsla(0,0%,100%,0.1);
+    margin: 0.5rem;
+    display: grid;
+    align-content: center;
+}
+
+#rollingTotalVote {
+    grid-column: span 3;
+    margin-top: 1rem;
+}
+#rollingTotalVote th {
+    padding: 1rem;
+}
+#rollingTotalVote td {
+    text-align: center;
+}
+@media only screen and (max-width:720px) {
+    body {
+        grid-template-columns: 1fr;
+    }
+    h1 {
+        grid-column: span 1;
+    }
+}
