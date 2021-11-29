@@ -54,9 +54,9 @@ const mainWords = document.getElementById('mainWords')
 //buttons things
 const mainButtons = document.getElementById("mainButtons")
 const buttonList = [... mainButtons.children]
-
+// global vars stuff
 var savedVote = ''
-
+var submittedNameRecently = false
 
 function gameOnGoing() {
     nameHolder.classList.toggle('hidden')
@@ -94,6 +94,21 @@ function voted(vote) {
     socket.emit('vote-send', vote)
 }
 
+function submitName() {
+    if(submittedNameRecently) {
+        alert("please wait 5 seconds. if the page hasn't changed, re-enter")
+    } else if (nameInput.value) {
+        socket.emit('enter-game', nameInput.value, () => joinGame())
+    } else {
+        alert('please enter a name. hmp.')
+    }
+
+    submittedNameRecently = true
+    setTimeout(() => {
+        submittedNameRecently = false
+    }, 5000)
+}
+
 function lost() {
     mainButtons.classList.toggle('hidden')
     mainWords.innerText = `You lost!\n You voted the least popular option. :(`
@@ -110,24 +125,11 @@ function tied() {
 function unanimous() {
     mainWords.innerText = "You passed this round!\n Everyone voted unanimously. \n:)"
 }
-
 nameInput.addEventListener('keyup', e => {
-    if(e.key === "Enter") {
-        if (nameInput.value) {
-            socket.emit('enter-game', nameInput.value, () => joinGame())
-        } else {
-            alert('please enter a name. hmp.')
-        }
-    }
+    if(e.key === "Enter") submitName()
 })
 
-nameButton.addEventListener('click', e => {
-    if (nameInput.value) {
-        socket.emit('enter-game', nameInput.value, () => joinGame())
-    } else {
-        alert('please enter a name. hmp.')
-    }
-})
+nameButton.addEventListener('click', submitName)
 
 buttonList.forEach(button => {
   button.addEventListener('click', () => {
