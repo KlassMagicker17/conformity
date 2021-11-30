@@ -1,9 +1,10 @@
 :root {
-    --pine-tree: #30362fff;
-    --antique-bronze: #625834ff;
-    --metallic-sunburst: #a59132ff;
-    --light-yellow: #fffbdbff;
-    --chocolate-web: #da7422ff;
+    --dark-liver: #54494bff;
+    --mint-cream: #f1f7edff;
+    --turquoise-green: #91c7b1ff;
+    --upsdell-red: #ac0929ff;
+    --flax: #e3d081ff;
+    --angel-blue: #719ECE;
 }
 
 * {
@@ -12,8 +13,7 @@
 
 body {
     margin: 0px;
-    background-color: var(--pine-tree);
-    color: var(--chocolate-web);
+    background-color: var(--dark-liver);
     display: grid;
     grid-template-columns: 1fr 1fr;
     justify-items: center;
@@ -23,17 +23,18 @@ h1 {
     text-align: center;
     grid-column: span 2;
     margin: 10vh;
+    color: var(--mint-cream);
 }
 
 table {
     border-collapse: collapse;
-    background-color: var(--antique-bronze);
+    background-color: var(--upsdell-red);
     color: white;
     margin: 0px 2rem;
 }
 
 td {
-    border: 2px solid var(--pine-tree);
+    border: 3px solid var(--dark-liver);
     padding: 1rem;
 }
 
@@ -50,14 +51,16 @@ tr:first-child>td {
 #controlPanel input[type=button] {
     padding: 1rem;
     background: hsla(0, 0%, 100%, 1);
-    border: 2px solid var(--chocolate-web);
+    border: 2px solid white;
     height: 4rem;
     margin: 0.5rem;
-    transition: 100ms transform ease-in;
+    transition: 100ms ease-in;
 }
 
 #controlPanel input[type=button]:not([disabled]):hover, #controlPanel input[type=button]:not([disabled]):focus {
-    transform: scale(1.1);
+    box-shadow: 0 0 10px var(--angel-blue);
+    border: 2px solid var(--turquoise-green);
+    outline: none;
 }
 
 #controlPanel > div {
@@ -85,5 +88,16 @@ tr:first-child>td {
     }
     h1 {
         grid-column: span 1;
+        margin: 1rem;
+    }
+    #controlPanel {
+        margin: 0px;
+        gap: 20px;
+    }
+    #controlPanel input[type=button] {
+        margin: 0px;
+    }
+    #currtable {
+        display: none
     }
 }

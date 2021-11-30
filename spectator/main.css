@@ -1,9 +1,9 @@
 :root {
-    --pine-tree: #30362fff;
-    --antique-bronze: #625834ff;
-    --metallic-sunburst: #a59132ff;
-    --light-yellow: #fffbdbff;
-    --chocolate-web: #da7422ff;
+    --dark-liver: #54494bff;
+    --mint-cream: #f1f7edff;
+    --turquoise-green: #91c7b1ff;
+    --upsdell-red: #ac0929ff;
+    --flax: #e3d081ff;
 }
 
 * {
@@ -13,13 +13,13 @@
 
 body {
     margin: 0px;
-    background-color: var(--pine-tree);
+    background-color: var(--dark-liver);
     height: 100vh;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     flex-direction: column;
-    color: var(--chocolate-web);
+    color: var(--flax);
 }
 
 h1 {
@@ -28,6 +28,7 @@ h1 {
     font-size: 3rem;
     margin: 0px 10vw;
     text-transform: uppercase;
+    color: var(--mint-cream)
 }
 
 #mainThing {
@@ -37,7 +38,7 @@ h1 {
 }
 
 #mainThing > div {
-    background-color: var(--antique-bronze);
+    background-color: var(--upsdell-red);
     display: flex;
     align-items: center;
     justify-content: center;

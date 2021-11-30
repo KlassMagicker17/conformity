@@ -19,17 +19,17 @@ function writeTable() {
     writeCell(head, 'Player ID')
     writeCell(head, 'Name')
     writeCell(head, 'Eliminated')
+    writeCell(head, 'Vote')
+    writeCell(head, 'Status')
     tblBody.appendChild(head)
     // creating all cells
     for (let i = 0; i < playerList.length; i++) {
         const row = document.createElement("tr")
         writeCell(row, playerList[i].id)
         writeCell(row, playerList[i].name)
-        if (!playerList[i].eliminated) {
-            writeCell(row, 'still in')
-        } else {
-            writeCell(row, 'eliminated')
-        }
+        writeCell(row, !playerList[i].eliminated ? 'still in' : 'eliminated')
+        writeCell(row, playerList[i].vote)
+        writeCell(row, playerList[i].connected ? 'connected' : 'disconnected')
 
         tblBody.appendChild(row)
     }

@@ -29,7 +29,7 @@ var totalCountedVotes = 0
 io.on("connection", socket => {
     socket.on('enter-game', (name, cb) => {
         if (!gameActive) {
-            playerList.push({ name, id: socket.id, eliminated: false })
+            playerList.push({ name, id: socket.id, eliminated: false, vote: '', connected: true })
             socket.join('inGame')
             cb()
             updateAdminList()
@@ -37,56 +37,16 @@ io.on("connection", socket => {
             socket.emit('game-crrently-active')
         }
     })
-
     socket.on('vote-send', vote => {
         votes[vote]++
         totalCountedVotes++
+        const pos = playerList.map(e => e.id).indexOf(socket.id)
+        playerList[pos].vote = vote
         updateAdminList()
         if (totalCountedVotes === numPlayers) {
-
-            let sortable = []
-
-            // turn obj votes into an array
-            for (const vote in votes) {
-                sortable.push([vote, votes[vote]]);
-            }
-            sortable.sort((a, b) => {
-                return a[1] - b[1]
-            })
-
-            // place all non-zero votes into a
-            const possibleWinners = []
-            for (let i = 0; i < sortable.length; i++) {
-                const letter = sortable[i];
-                if (letter[1] > 0) {
-                    possibleWinners.push(sortable[i])
-                }
-            }
-            // checking of ties compared to the lowest
-            sortable = possibleWinners
-            const lowest = sortable[0][1]
-            const loserList = [sortable[0][0]]
-            let foundTie = false
-            for (let i = 1; i < sortable.length; i++) {
-                const letter = sortable[i]
-                if (letter[1] === lowest) {
-                    foundTie = true
-                    loserList.push(letter[0])
-                    console.log("found tie", loserList)
-                }
-            }
-            if (foundTie) {
-                io.in('inGame').emit('tied-losers', loserList)
-                console.log();
-            } else if (sortable.length === 1) {
-                io.in('inGame').emit('unanimous')
-            } else {
-                io.in('inGame').emit('reveal-losers', sortable[0][0])
-            }
-            io.emit('finished-voting', votes)
+            calculateRoundLoser()
         }
     })
-
     socket.on('lost-round', () => {
         playerList.forEach(player => {
             if (player.id === socket.id) {
@@ -95,6 +55,18 @@ io.on("connection", socket => {
                 updateAdminList()
             }
         })
+    })
+    socket.on('info-resend', info => {
+        playerList.push({id:socket.id, name: info.name, eliminated: info.eliminated, vote: info.vote, connected: true})
+        updateAdminList()
+    })
+    socket.on('disconnect', () => {
+        const pos = playerList.map(e => e.id).indexOf(socket.id)
+        if(pos === -1) return
+        playerList[pos].connected = false
+        // playerList.splice(pos,1)
+        console.log(`${socket.id} has disconnected`)
+        updateAdminList()
     })
 
     // all admin-related events
@@ -117,6 +89,7 @@ io.on("connection", socket => {
             if (!player.eliminated) {
                 numPlayers++
             }
+            player.vote = ''
         })
     })
     socket.on('restart-game', () => {
@@ -131,13 +104,70 @@ io.on("connection", socket => {
         io.emit('force-restart-game')
         updateAdminList()
     })
+    socket.on('refresh-player-list', () => {
+        playerList.length = 0
+        io.in('inGame').emit('resend-info')
+    })
+    socket.on('reopen-game', () => {
+        gameActive = false
+    })
+    socket.on('force-end-round', () => {
+        calculateRoundLoser()
+    })
 
     // all spectator-related ones
     socket.on('spectate-connected', () => {
         socket.join('spectators')
+        socket.emit('update-spectator',gameActive)
     })
 })
 
 function updateAdminList() {
     io.emit('update-admin-list', playerList, votes)
+}
+
+function calculateRoundLoser() {
+        
+    let sortable = []
+
+    // turn obj votes into an array
+    for (const vote in votes) {
+        sortable.push([vote, votes[vote]]);
+    }
+    sortable.sort((a, b) => {
+        return a[1] - b[1]
+    })
+
+    // place all non-zero votes into a
+    const possibleWinners = []
+    for (let i = 0; i < sortable.length; i++) {
+        const letter = sortable[i];
+        if (letter[1] > 0) {
+            possibleWinners.push(sortable[i])
+        }
+    }
+    // checking of ties compared to the lowest
+    sortable = possibleWinners
+    const lowest = sortable[0][1]
+    const loserList = [sortable[0][0]]
+    let foundTie = false
+    for (let i = 1; i < sortable.length; i++) {
+        const letter = sortable[i]
+        if (letter[1] === lowest) {
+            foundTie = true
+            loserList.push(letter[0])
+            console.log("found tie", loserList)
+        }
+    }
+    if (foundTie) {
+        io.in('inGame').emit('tied-losers', loserList)
+        console.log();
+    } else if (sortable.length === 1) {
+        io.in('inGame').emit('unanimous')
+    } else {
+        io.in('inGame').emit('reveal-losers', sortable[0][0])
+    }
+    io.emit('finished-voting', votes)
+
+
 }
