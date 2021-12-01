@@ -18,6 +18,7 @@ socket.on('update-admin-list', (players, votes) => {
 socket.on('finished-voting', () => {
     roundStart.disabled = false
     roundEnd.disabled = true
+    gameOpen.disabled = false
     updateData()
     writeTabletwo()
 })

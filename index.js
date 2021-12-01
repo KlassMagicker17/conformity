@@ -91,6 +91,7 @@ io.on("connection", socket => {
             }
             player.vote = ''
         })
+        updateAdminList()
     })
     socket.on('restart-game', () => {
         playerList.length = 0
